@@ -3,6 +3,8 @@ from Validadores import *
 
 class Pessoa():
     def cadastro(self, cpf, nome, email):
+        bd = Manipulacao()
+        
         self.cpf = False
         #Looping de solicitação e validação de CPF
         while cpf == False:
@@ -10,7 +12,12 @@ class Pessoa():
             numero_cpf = ''.join(numero_cpf)
             validador_cpf = ValidadorCPF(numero_cpf)
             if validador_cpf.validador():
-                cpf = True
+                existe = bd.busca_cpf(cpf)
+                if existe == False:
+                    print("CPF já cadastrado")
+                    cpf = False
+                else:
+                    cpf = True
             else:
                 print("CPF inválido!")
                 cpf = False
@@ -39,5 +46,5 @@ class Pessoa():
                 print("E-mail inválido")
                 email = False
 
-        inserir = Manipulacao()
-        return inserir.inserir(cpf,nome,email)
+        #inserir dados no banco
+        return bd.inserir(cpf,nome,email)

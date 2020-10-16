@@ -63,7 +63,7 @@ class Manipulacao():
                 conexao.close()
     
     #Busca por CPF de cadastros ativos
-    def busca_email(self, cpf):
+    def busca_cpf(self, cpf):
         try:
             conexao = Conexao().get_connection()
             cursor = conexao.cursor()
