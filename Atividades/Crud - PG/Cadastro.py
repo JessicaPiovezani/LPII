@@ -12,8 +12,9 @@ class Pessoa():
             numero_cpf = ''.join(numero_cpf)
             validador_cpf = ValidadorCPF(numero_cpf)
             if validador_cpf.validador():
-                existe = bd.busca_cpf(cpf)
-                if existe == False:
+                numero_cpf = validador_cpf._snumeros(numero_cpf)
+                existe = bd.busca_cpf(numero_cpf)
+                if existe:
                     print("CPF já cadastrado")
                     cpf = False
                 else:
@@ -21,7 +22,7 @@ class Pessoa():
             else:
                 print("CPF inválido!")
                 cpf = False
-
+                
         self.nome = False
         #Looping de solicitação e validação de nome
         while nome == False:
@@ -48,3 +49,4 @@ class Pessoa():
 
         #inserir dados no banco
         return bd.inserir(cpf,nome,email)
+

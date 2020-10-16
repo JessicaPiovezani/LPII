@@ -62,8 +62,29 @@ class Manipulacao():
                 cursor.close()
                 conexao.close()
     
-    #Busca por CPF de cadastros ativos
+    #Verificação de CPF existente no banco
     def busca_cpf(self, cpf):
+        try:
+            conexao = Conexao().get_connection()
+            cursor = conexao.cursor()
+            busca = "select * from pessoas where cpf = '{0}'".format(cpf)
+            cursor.execute(busca)
+            pessoas = cursor.fetchall()
+            if len(pessoas) >= 1:
+                return True
+            else:
+                return False
+            
+        except (Exception, psycopg2.DatabaseError) as error:
+            print("Oppss! Algum erro aconteceu :/", error)
+        
+        finally:
+            if (conexao):
+                cursor.close()
+                conexao.close()
+
+    #Busca por CPF de cadastros ativos
+    def busca_pessoa_cpf(self, cpf):
         try:
             conexao = Conexao().get_connection()
             cursor = conexao.cursor()
