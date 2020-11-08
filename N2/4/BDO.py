@@ -28,10 +28,14 @@ class Manipulacao():
             busca = "select * from pessoas where nome like '%{0}%' and status = 1".format(nome)
             cursor.execute(busca)
             pessoas = cursor.fetchall()
-            for i in pessoas:
-                print ("Nome: ", i[1])
-                print ("CPF: ", i[0])
-                print ("E-mail: ", i[2])
+            if pessoas:
+                for i in pessoas:
+                    print ("Nome: ", i[2])
+                    print ("CPF: ", i[1])
+                    print ("E-mail: ", i[3])
+                return True
+            else:
+                return False
             
         except (Exception, psycopg2.DatabaseError) as error:
             print("Oppss! Algum erro aconteceu :/", error)
@@ -50,9 +54,9 @@ class Manipulacao():
             cursor.execute(busca)
             pessoas = cursor.fetchall()
             for i in pessoas:
-                print ("Nome: ", i[1])
-                print ("CPF: ", i[0])
-                print ("E-mail: ", i[2])
+                print ("Nome: ", i[2])
+                print ("CPF: ", i[1])
+                print ("E-mail: ", i[3])
             
         except (Exception, psycopg2.DatabaseError) as error:
             print("Oppss! Algum erro aconteceu :/", error)
@@ -91,10 +95,14 @@ class Manipulacao():
             busca = "select * from pessoas where cpf like '%{0}%' and status = 1".format(cpf)
             cursor.execute(busca)
             pessoas = cursor.fetchall()
-            for i in pessoas:
-                print ("Nome: ", i[1])
-                print ("CPF: ", i[0])
-                print ("E-mail: ", i[2])
+            if len(pessoas) >= 1:
+                for i in pessoas:
+                    print ("Nome: ", i[2])
+                    print ("CPF: ", i[1])
+                    print ("E-mail: ", i[3])
+                return True
+            else:
+                return False
             
         except (Exception, psycopg2.DatabaseError) as error:
             print("Oppss! Algum erro aconteceu :/", error)
@@ -112,11 +120,14 @@ class Manipulacao():
             busca = "select * from pessoas where status = 0"
             cursor.execute(busca)
             pessoas = cursor.fetchall()
-            
-            for i in pessoas:
-                print ("Nome: ", i[1])
-                print ("CPF: ", i[0])
-                print ("E-mail: ", i[2])
+            if len(pessoas) >= 1:
+                for i in pessoas:
+                    print ("Nome: ", i[2])
+                    print ("CPF: ", i[1])
+                    print ("E-mail: ", i[3])
+                return True
+            else:
+                return False
             
         except (Exception, psycopg2.DatabaseError) as error:
             print("Oppss! Algum erro aconteceu :/", error)
@@ -125,3 +136,36 @@ class Manipulacao():
             if (conexao):
                 cursor.close()
                 conexao.close()
+    
+    def atualiza(self, nome, email, cpf):
+        try:
+            conexao = Conexao().get_connection()
+            cursor = conexao.cursor()
+            atualiza = "UPDATE pessoas SET nome='{0}', email='{1}' WHERE cpf = '{2}'".format(nome, email, cpf)
+            cursor.execute(atualiza)
+            conexao.commit()
+            print("Cadastro alterado com sucesso!")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print("Oppss! Algum erro aconteceu :/", error)
+        
+        finally:
+            if (conexao):
+                cursor.close()
+                conexao.close()
+    
+    def inativa(self, cpf):
+        try:
+            conexao = Conexao().get_connection()
+            cursor = conexao.cursor()
+            atualiza = "UPDATE pessoas SET status = 0 WHERE cpf = '{0}'".format(cpf)
+            cursor.execute(atualiza)
+            conexao.commit()
+            print("Cadastro inativado com sucesso!")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print("Oppss! Algum erro aconteceu :/", error)
+        
+        finally:
+            if (conexao):
+                cursor.close()
+                conexao.close()
+
