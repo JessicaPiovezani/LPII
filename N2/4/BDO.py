@@ -1,3 +1,4 @@
+#Importação de biblioteca para maniplação de dados no PostgreeSQL
 import psycopg2
 from BD import Conexao
 
@@ -137,6 +138,7 @@ class Manipulacao():
                 cursor.close()
                 conexao.close()
     
+    #Atualização de cadastro
     def atualiza(self, nome, email, cpf):
         try:
             conexao = Conexao().get_connection()
@@ -153,6 +155,7 @@ class Manipulacao():
                 cursor.close()
                 conexao.close()
     
+    #Inativação de cadastro
     def inativa(self, cpf):
         try:
             conexao = Conexao().get_connection()
