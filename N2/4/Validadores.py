@@ -1,5 +1,8 @@
+#Importação da biblioteca re para utilizar expressões regulares para validação de e-mail e CPF
 import re
 
+
+#Validador de CPF
 class ValidadorCPF():
 
     def __init__(self, cpf):
