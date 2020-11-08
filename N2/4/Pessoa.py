@@ -60,7 +60,7 @@ class Pessoa():
         bd = Manipulacao()
         resultado = False
         while resultado == False:
-            busca = input("\n\nDigite o dado do cadastro (CPF, nome ou e-mail): ")
+            busca = input("\n\nDigite algum dado do cadastro (CPF, nome ou e-mail): ")
             busca = ''.join(busca)
 
             #Valida se é um CPF
